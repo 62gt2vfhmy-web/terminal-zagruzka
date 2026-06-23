@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "terminal-zagruzka"
+version = "0.1.0"
+description = "A beautiful, animated terminal UI for downloading video and audio with yt-dlp."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "terminal-zagruzka contributors" }]
+keywords = ["yt-dlp", "youtube", "download", "tui", "terminal", "cli", "video", "audio"]
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS :: MacOS X",
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Multimedia :: Sound/Audio",
+]
+dependencies = [
+    "yt-dlp>=2024.1.0",
+    "rich>=13.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.urls]
+Homepage = "https://github.com/62gt2vfhmy-web/terminal-zagruzka"
+Repository = "https://github.com/62gt2vfhmy-web/terminal-zagruzka"
+
+[project.scripts]
+tz = "terminal_zagruzka.cli:main"
+utd = "terminal_zagruzka.cli:main"
+terminal-zagruzka = "terminal_zagruzka.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
