@@ -34,6 +34,12 @@ LOGO_COLORS: List[str] = [
 
 TAGLINE = "terminal-zagruzka · download anything, beautifully"
 
+# Japanese-style accents. ダウンロード = "download"; the kanji 何でも美しく
+# roughly reads "everything, beautifully". A torii gate sits above the logo.
+TAGLINE_JP = "ダウンロード · 何でも、美しく"
+TORII = "  ⛩  ﾀｰﾐﾅﾙ・ｻﾞｸﾞﾙｽﾞｶ  ⛩"
+SEIGAIHA = "🌸  ❀  ✿  ❁  ❀  ✿  ❁  ❀  🌸"
+
 
 def render_logo() -> str:
     """Return the logo as a rich-markup string with a vertical gradient."""
@@ -99,3 +105,72 @@ def pixel_spinner(step: int, width: int = 6) -> str:
     for i in range(width):
         frame.append(PIXEL_SPINNER[(step + i) % len(PIXEL_SPINNER)])
     return "".join(frame)
+
+
+# ---------------------------------------------------------------------------
+# Japanese-style "sakura" (cherry blossom) loading animation
+# ---------------------------------------------------------------------------
+
+# Pixel cherry-blossom petals, drifting on the wind while we work.
+_PETALS = ["❀", "✿", "❁", "✾", "•", "·"]
+_SAKURA_COLORS = ["#ffd1e3", "#ff9ec7", "#ff6f91", "#ff3d6e", "#ffb7d5"]
+
+# A deterministic set of petals; each has a column, a fall phase and a wind
+# drift so the field looks organic but is fully reproducible from ``step``.
+_PETAL_SEEDS = [
+    (2, 0, 1),
+    (9, 2, 1),
+    (16, 4, 2),
+    (23, 1, 1),
+    (30, 3, 2),
+    (37, 5, 1),
+    (5, 6, 2),
+    (13, 1, 1),
+    (20, 3, 1),
+    (27, 0, 2),
+    (34, 4, 1),
+    (40, 2, 1),
+]
+
+
+def sakura_field(step: int, width: int = 44, height: int = 5) -> List[str]:
+    """Return ``height`` rows (rich markup) of wind-blown cherry-blossom petals."""
+    grid = [[" "] * width for _ in range(height)]
+    style = [[""] * width for _ in range(height)]
+    for idx, (col0, phase, drift) in enumerate(_PETAL_SEEDS):
+        t = step + phase * 3
+        row = t % height
+        # Petals drift sideways as they fall (wind from the right).
+        col = (col0 + (t // height) * drift) % width
+        grid[row][col] = _PETALS[(idx + step) % len(_PETALS)]
+        style[row][col] = _SAKURA_COLORS[(idx + step) % len(_SAKURA_COLORS)]
+
+    lines = []
+    for r in range(height):
+        parts = []
+        for c in range(width):
+            ch = grid[r][c]
+            if ch == " ":
+                parts.append(" ")
+            else:
+                parts.append(f"[{style[r][c]}]{ch}[/]")
+        lines.append("".join(parts))
+    return lines
+
+
+_LOADING_JP = ["読み込み中", "ロード中", "準備中"]
+
+
+def loading_frame(step: int, message: str, width: int = 44) -> str:
+    """A full sakura loading scene (rich markup) for the 'working' state."""
+    petals = sakura_field(step, width=width, height=4)
+    wave = pixel_spinner(step, width=10)
+    jp = _LOADING_JP[(step // 6) % len(_LOADING_JP)]
+    spin_color = _SAKURA_COLORS[step % len(_SAKURA_COLORS)]
+    lines = list(petals)
+    lines.append("")
+    lines.append(
+        f"[bold {spin_color}]{wave}[/]  "
+        f"[bold white]{message}[/]  [italic #ff9ec7]{jp}…[/]"
+    )
+    return "\n".join(lines)

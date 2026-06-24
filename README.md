@@ -1,36 +1,46 @@
 # terminal-zagruzka · `tz`
 
-> **Download anything, beautifully — right from your terminal.**
+<p align="center">
+  <img src="assets/banner.svg" alt="terminal-zagruzka — download anything, beautifully" width="100%">
+</p>
+
+> **🌸 ダウンロード · Download anything, beautifully — right from your terminal. 🌸**
 
 `terminal-zagruzka` (Russian *загрузка* — "download/loading") is a friendly,
 animated terminal front-end for [**yt-dlp**](https://github.com/yt-dlp/yt-dlp).
-Paste a video or playlist link, pick a format, and watch a pixel-art download
-animation while `yt-dlp` does the heavy lifting. It runs on **Linux** and
-**macOS** and exposes the power of `yt-dlp` through a UI that's simple enough
-for anyone.
+**No flags to memorize:** just run `tz`, paste a video or playlist link, and the
+program shows you a little menu of formats to pick from — then plays a Japanese
+sakura (cherry-blossom) pixel animation while it works. It runs on **Linux** and
+**macOS** and exposes the power of `yt-dlp` through a UI simple enough for anyone.
 
 ```
-████████╗ ███████╗
-╚══██╔══╝ ╚══███╔╝
-   ██║      ███╔╝
-   ██║     ███╔╝
-   ██║    ███████╗
-   ╚═╝    ╚══════╝
-terminal-zagruzka · download anything, beautifully
+   ⛩  ﾀｰﾐﾅﾙ・ｻﾞｸﾞﾙｽﾞｶ  ⛩
+
+   ████████╗ ███████╗
+   ╚══██╔══╝ ╚══███╔╝
+      ██║      ███╔╝
+      ██║     ███╔╝
+      ██║    ███████╗
+      ╚═╝    ╚══════╝
+   terminal-zagruzka · download anything, beautifully
+   ダウンロード · 何でも、美しく
 ```
 
 ## ✨ Features
 
-- **Guided, animated experience** — a pixel-art banner, a live "packets raining
-  from the internet" download animation, gradient progress bars, speed/ETA, and
-  tidy result panels.
-- **Pick your format in one keystroke** — best quality, 1080p / 720p / 480p
-  video, or MP3 / M4A audio-only (audio is extracted with `ffmpeg`).
+- **No flags required** — run `tz`, paste a link, and **choose your format from a
+  menu** by typing a single number. The menu even shows which qualities the video
+  actually offers (e.g. `✓ available` / `↓ best is 720p`).
+- **Beautiful, animated experience** — a Japanese-styled pixel banner, a **sakura
+  cherry-blossom loading animation** while it reads the link, a live "packets
+  raining from the internet" download animation, gradient progress bars with
+  speed/ETA, and tidy result panels.
+- **Every format in one keystroke** — best quality, 1080p / 720p / 480p video, or
+  MP3 / M4A audio-only (audio is extracted with `ffmpeg`).
 - **Playlists** — see a preview of the items and choose a range like `1-5,8`.
 - **Extras** — embed thumbnails as cover art for audio, or grab subtitles for
   video.
-- **Two ways to use it** — a fully interactive wizard, or scriptable one-shot
-  commands with flags.
+- **Power users welcome too** — optional one-shot flags for scripting.
 - **Three command names** — `tz`, `utd`, or `terminal-zagruzka`. Pick whichever
   you like.
 

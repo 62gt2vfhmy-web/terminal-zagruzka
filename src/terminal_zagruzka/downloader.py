@@ -210,6 +210,30 @@ class MediaInfo:
     def count(self) -> int:
         return len(self.entries) if self.is_playlist else 1
 
+    @property
+    def max_height(self) -> Optional[int]:
+        """Highest video resolution detected for a single video (else None)."""
+        if self.is_playlist or not self.entries:
+            return None
+        heights = [
+            f.get("height")
+            for f in (self.entries[0].get("formats") or [])
+            if f.get("height")
+        ]
+        return max(heights) if heights else None
+
+    @property
+    def detected_qualities(self) -> List[int]:
+        """Sorted (desc) list of distinct video heights for a single video."""
+        if self.is_playlist or not self.entries:
+            return []
+        heights = {
+            f.get("height")
+            for f in (self.entries[0].get("formats") or [])
+            if f.get("height")
+        }
+        return sorted(heights, reverse=True)
+
 
 def probe(url: str, quiet: bool = True) -> MediaInfo:
     """Extract metadata for ``url`` without downloading anything."""

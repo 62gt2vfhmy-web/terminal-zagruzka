@@ -58,3 +58,32 @@ def test_count_range():
     assert _count_range("1-3,7", 10) == 4
     assert _count_range("2-", 10) == 9
     assert _count_range("-3", 10) == 3
+
+
+def test_sakura_field_dimensions_and_petals():
+    rows = art.sakura_field(0, width=40, height=5)
+    assert len(rows) == 5
+    # Every row is a string; across the field there should be visible petals.
+    joined = "".join(rows)
+    assert any(p in joined for p in art._PETALS)
+
+
+def test_sakura_field_animates_between_steps():
+    a = art.sakura_field(0)
+    b = art.sakura_field(1)
+    assert a != b  # petals move
+
+
+def test_loading_frame_contains_message_and_japanese():
+    frame = art.loading_frame(0, "Reading the link")
+    assert "Reading the link" in frame
+    # One of the rotating Japanese loading words should appear.
+    assert any(jp in frame for jp in art._LOADING_JP)
+
+
+def test_preset_cap():
+    from terminal_zagruzka.downloader import PRESET_BY_KEY
+
+    assert ui._preset_cap(PRESET_BY_KEY["720"]) == 720
+    assert ui._preset_cap(PRESET_BY_KEY["best"]) is None
+    assert ui._preset_cap(PRESET_BY_KEY["mp3"]) is None

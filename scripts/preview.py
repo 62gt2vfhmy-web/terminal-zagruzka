@@ -19,6 +19,11 @@ def main() -> None:
     console = Console(force_terminal=True, width=80)
     console.print(ui.make_banner())
     console.print()
+    console.rule("[bold]sakura loading frames (Japanese style)[/]")
+    for step in (0, 1, 2, 3):
+        console.print(f"frame {step}:")
+        console.print(art.loading_frame(step, "Reading the link"), highlight=False)
+        console.print()
     console.rule("[bold]pixel download frames[/]")
     for step in (0, 1, 2, 3):
         console.print(f"frame {step}:")

@@ -61,9 +61,8 @@ def run_interactive(
         ui.show_error("No link provided. Nothing to do.")
         return 1
 
-    ui.info("Fetching information…")
     try:
-        media = probe(url)
+        media = ui.run_with_loader("Reading the link", lambda: probe(url))
     except Exception as exc:  # noqa: BLE001
         ui.show_error(f"Could not read that link:\n{exc}")
         return 1
@@ -74,7 +73,7 @@ def run_interactive(
     if media.is_playlist:
         playlist_items = ui.ask_playlist_items(media.count)
 
-    preset = ui.choose_preset(PRESETS)
+    preset = ui.choose_preset(PRESETS, max_height=media.max_height)
 
     out_dir = output_dir or ui.ask_output_dir(default=os.path.join(os.getcwd(), "downloads"))
 
@@ -124,9 +123,8 @@ def run_once(
 
     total_items = 1
     if show_info:
-        ui.info("Fetching information…")
         try:
-            media = probe(url)
+            media = ui.run_with_loader("Reading the link", lambda: probe(url))
             ui.show_media_info(media)
             total_items = (
                 _count_range(playlist_items, media.count)

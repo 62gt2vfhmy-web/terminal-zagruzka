@@ -73,13 +73,22 @@ def human_duration(seconds: Optional[float]) -> str:
 
 def make_banner() -> Panel:
     logo = Text.from_markup(art.render_logo())
+    torii = Text(art.TORII, style="bold #ff6f91")
     tagline = Text(art.TAGLINE, style="italic #8a7dff")
-    body = Group(Align.center(logo), Text(""), Align.center(tagline))
+    tagline_jp = Text(art.TAGLINE_JP, style="italic #ff9ec7")
+    body = Group(
+        Align.center(torii),
+        Text(""),
+        Align.center(logo),
+        Text(""),
+        Align.center(tagline),
+        Align.center(tagline_jp),
+    )
     return Panel(
         body,
         border_style="#00e5ff",
         padding=(1, 4),
-        title="[bold #e040fb]★[/]",
+        title="[bold #e040fb]🌸 ★ 🌸[/]",
         subtitle="[#5aa6ff]powered by yt-dlp[/]",
     )
 
@@ -132,6 +141,12 @@ def show_media_info(info: MediaInfo) -> None:
             table.add_row("Duration", human_duration(entry.get("duration")))
         if entry.get("view_count"):
             table.add_row("Views", f"{entry.get('view_count'):,}")
+        qualities = info.detected_qualities
+        if qualities:
+            shown = ", ".join(f"{h}p" for h in qualities[:6])
+            if len(qualities) > 6:
+                shown += " …"
+            table.add_row("Available", shown)
 
     console.print(
         Panel(table, title="[bold #00e5ff]Found[/]", border_style="#5aa6ff")
@@ -152,17 +167,40 @@ def ask_url(default: Optional[str] = None) -> str:
     ).strip()
 
 
-def choose_preset(presets: List[Preset] = PRESETS) -> Preset:
+def _preset_cap(preset: Preset) -> Optional[int]:
+    """Height cap implied by a video preset's key (e.g. 720). None otherwise."""
+    if preset.audio_codec is not None:
+        return None
+    if preset.key.isdigit():
+        return int(preset.key)
+    return None
+
+
+def choose_preset(
+    presets: List[Preset] = PRESETS, max_height: Optional[int] = None
+) -> Preset:
     table = Table(
-        title="[bold #e040fb]Choose a format[/]",
+        title="[bold #e040fb]🌸 Choose a format — just type a number 🌸[/]",
         border_style="#5aa6ff",
         header_style="bold #00e5ff",
     )
     table.add_column("#", justify="right", style="#8a7dff")
     table.add_column("Format", style="bold white")
     table.add_column("Details", style="dim")
+    table.add_column("", style="bold")
     for i, preset in enumerate(presets, start=1):
-        table.add_row(str(i), preset.label, preset.description)
+        note = ""
+        cap = _preset_cap(preset)
+        if max_height and cap:
+            if max_height >= cap:
+                note = "[green]✓ available[/]"
+            else:
+                note = f"[yellow]↓ best is {max_height}p[/]"
+        elif max_height is None and cap:
+            note = ""
+        elif preset.audio_codec:
+            note = "[#ff9ec7]🎵 audio[/]"
+        table.add_row(str(i), preset.label, preset.description, note)
     console.print(table)
 
     choice = IntPrompt.ask(
@@ -348,3 +386,46 @@ def show_error(message: str) -> None:
 
 def info(message: str) -> None:
     console.print(f"[#5aa6ff]›[/] {message}")
+
+
+def run_with_loader(message: str, target):
+    """Run ``target()`` in a background thread while animating sakura petals.
+
+    Returns whatever ``target`` returns; re-raises any exception it throws.
+    Falls back to a plain status line when stdout is not a terminal.
+    """
+    result: dict = {}
+    box: dict = {}
+
+    def worker() -> None:
+        try:
+            result["value"] = target()
+        except BaseException as exc:  # noqa: BLE001 - surfaced to caller
+            box["error"] = exc
+
+    thread = threading.Thread(target=worker, daemon=True)
+    thread.start()
+
+    if console.is_terminal:
+        step = 0
+        with Live(console=console, refresh_per_second=15, transient=True) as live:
+            while thread.is_alive():
+                frame = Text.from_markup(art.loading_frame(step, message))
+                live.update(
+                    Panel(
+                        Align.center(frame),
+                        border_style="#ff6f91",
+                        title="[bold #ff9ec7]🌸 ロード中 🌸[/]",
+                        padding=(1, 3),
+                    )
+                )
+                step += 1
+                time.sleep(0.066)
+        thread.join()
+    else:
+        info(message)
+        thread.join()
+
+    if "error" in box:
+        raise box["error"]
+    return result.get("value")

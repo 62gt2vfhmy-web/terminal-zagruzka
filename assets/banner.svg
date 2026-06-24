@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="820" height="300" viewBox="0 0 820 300" fill="none" role="img" aria-label="terminal-zagruzka animated banner">
+  <defs>
+    <linearGradient id="logo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00e5ff"/>
+      <stop offset="50%" stop-color="#8a7dff"/>
+      <stop offset="100%" stop-color="#e040fb"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00e5ff"/>
+      <stop offset="50%" stop-color="#b85bff"/>
+      <stop offset="100%" stop-color="#e040fb"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b1021"/>
+      <stop offset="100%" stop-color="#151a33"/>
+    </linearGradient>
+    <path id="petal" d="M0 0 C -7 -10 -7 -24 0 -32 C 7 -24 7 -10 0 0 Z"/>
+  </defs>
+
+  <rect x="2" y="2" width="816" height="296" rx="18" fill="url(#bg)" stroke="#00e5ff" stroke-opacity="0.5" stroke-width="2"/>
+
+  <text x="410" y="46" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#ff6f91">&#x26E9;  &#x30BF;&#x30FC;&#x30DF;&#x30CA;&#x30EB;&#x30FB;&#x30B6;&#x30B0;&#x30EB;&#x30FC;&#x30C4;&#x30AB;  &#x26E9;</text>
+
+  <text x="410" y="150" text-anchor="middle" font-family="monospace" font-size="96" font-weight="bold" fill="url(#logo)" letter-spacing="6">
+    TZ
+    <animate attributeName="opacity" values="0.78;1;0.78" dur="3s" repeatCount="indefinite"/>
+  </text>
+
+  <text x="410" y="188" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#8a7dff" font-style="italic">terminal-zagruzka &#xB7; download anything, beautifully</text>
+  <text x="410" y="214" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#ff9ec7" font-style="italic">&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9; &#xB7; &#x4F55;&#x3067;&#x3082;&#x3001;&#x7F8E;&#x3057;&#x304F;</text>
+
+  <rect x="160" y="240" width="500" height="14" rx="7" fill="#222a4d"/>
+  <rect x="160" y="240" height="14" rx="7" fill="url(#bar)">
+    <animate attributeName="width" values="0;500;500" keyTimes="0;0.85;1" dur="3.2s" repeatCount="indefinite"/>
+  </rect>
+  <text x="675" y="251" font-family="monospace" font-size="13" fill="#e040fb">&#x2193;&#x2193;&#x2193;<animate attributeName="opacity" values="0.4;1;0.4" dur="1s" repeatCount="indefinite"/></text>
+
+  <g fill="#ff9ec7" opacity="0.9">
+    <g><use xlink:href="#petal" href="#petal" transform="translate(70,0) scale(0.7)"><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="3s" repeatCount="indefinite" additive="sum"/></use>
+      <animateTransform attributeName="transform" type="translate" values="40,-30; 90,330" dur="6.5s" begin="-1s" repeatCount="indefinite"/></g>
+    <g fill="#ff6f91"><use xlink:href="#petal" href="#petal" transform="scale(0.6)"><animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="4s" repeatCount="indefinite" additive="sum"/></use>
+      <animateTransform attributeName="transform" type="translate" values="160,-40; 120,330" dur="7.5s" begin="-3s" repeatCount="indefinite"/></g>
+    <g fill="#ffd1e3"><use xlink:href="#petal" href="#petal" transform="scale(0.8)"><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="5s" repeatCount="indefinite" additive="sum"/></use>
+      <animateTransform attributeName="transform" type="translate" values="260,-50; 300,330" dur="6s" begin="-2.2s" repeatCount="indefinite"/></g>
+    <g fill="#ff3d6e"><use xlink:href="#petal" href="#petal" transform="scale(0.55)"><animateTransform attributeName="transform" type="rotate" from="180" to="540" dur="3.5s" repeatCount="indefinite" additive="sum"/></use>
+      <animateTransform attributeName="transform" type="translate" values="540,-30; 500,330" dur="8s" begin="-4s" repeatCount="indefinite"/></g>
+    <g fill="#ff9ec7"><use xlink:href="#petal" href="#petal" transform="scale(0.7)"><animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="4.5s" repeatCount="indefinite" additive="sum"/></use>
+      <animateTransform attributeName="transform" type="translate" values="660,-40; 700,330" dur="7s" begin="-1.5s" repeatCount="indefinite"/></g>
+    <g fill="#ffb7d5"><use xlink:href="#petal" href="#petal" transform="scale(0.65)"><animateTransform attributeName="transform" type="rotate" from="90" to="450" dur="3.8s" repeatCount="indefinite" additive="sum"/></use>
+      <animateTransform attributeName="transform" type="translate" values="760,-50; 720,330" dur="6.8s" begin="-5s" repeatCount="indefinite"/></g>
+    <g fill="#ff6f91"><use xlink:href="#petal" href="#petal" transform="scale(0.5)"><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2.8s" repeatCount="indefinite" additive="sum"/></use>
+      <animateTransform attributeName="transform" type="translate" values="380,-30; 420,330" dur="9s" begin="-2.8s" repeatCount="indefinite"/></g>
+  </g>
+</svg>
